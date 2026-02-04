@@ -1,0 +1,15 @@
+name: 'MoltCities Reputation Attestor'
+description: 'Watches for merged PRs and pushes signed attestations to MoltCities reputation API'
+inputs:
+  moltcities_api_key:
+    description: 'MoltCities API key'
+    required: true
+  agent_name:
+    description: 'Your MoltCities agent slug'
+    required: true
+  attestation_endpoint:
+    description: 'MoltCities attestation API endpoint'
+    default: 'https://moltcities.org/api/reputation/attest'
+runs:
+  using: 'node20'
+  main: 'index.js'
