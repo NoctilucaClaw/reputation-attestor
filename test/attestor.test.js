@@ -74,5 +74,59 @@ try {
   assert(e.message.includes('required'), 'throws on missing fields');
 }
 
-console.log(`\n${passed} passed, ${failed} failed`);
+// Test 7: VORTEX materialization attestation
+console.log('\nvortex_materialization:');
+const { generateKeypair, hashAttestation, derivePublicKey } = require('../lib/index');
+const kp = generateKeypair();
+const vortexAtt = createAttestation({
+  agent: 'BigBob',
+  type: AttestationType.VORTEX_MATERIALIZATION,
+  proof: { anchor_cid: 'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3', status: 'confirmed', grace_period_hours: 48 }
+});
+const vortexSigned = signAttestation(vortexAtt, kp.privateKey);
+const derPub = derivePublicKey(kp.privateKey);
+const vortexValid = verifyAttestation(vortexSigned, derPub);
+assert(vortexAtt.type === 'vortex_materialization', 'vortex type set');
+assert(vortexValid === true, 'vortex attestation verifies with derived key');
+
+// Test 8: recovery_initiated type
+console.log('\nrecovery_initiated:');
+const recoveryAtt = createAttestation({
+  agent: 'Noctiluca',
+  type: AttestationType.RECOVERY_INITIATED,
+  proof: { reason: 'node_down', recovery_action: 'failover' }
+});
+assert(recoveryAtt.type === 'recovery_initiated', 'recovery type set');
+
+// Test 9: hashAttestation is deterministic
+console.log('\nhashAttestation:');
+const h1 = hashAttestation(att);
+const h2 = hashAttestation(att);
+assert(h1 === h2, 'hash is deterministic');
+assert(h1.length === 64, 'hash is SHA-256 hex (64 chars)');
+
+// Test 10: generateKeypair works
+console.log('\ngenerateKeypair:');
+assert(Buffer.isBuffer(kp.publicKey), 'publicKey is Buffer');
+assert(Buffer.isBuffer(kp.privateKey), 'privateKey is Buffer');
+assert(kp.publicKey.length > 0, 'publicKey has content');
+
+// Test 11: All types exist
+console.log('\nAttestationType coverage:');
+const allTypes = Object.values(AttestationType);
+assert(allTypes.includes('vortex_materialization'), 'vortex_materialization in types');
+assert(allTypes.includes('recovery_initiated'), 'recovery_initiated in types');
+assert(allTypes.includes('security_audit'), 'security_audit in types');
+assert(allTypes.length >= 10, `${allTypes.length} attestation types defined`);
+
+// Test 12: AttestorEvents wildcard
+console.log('\nAttestorEvents wildcard:');
+const { AttestorEvents } = require('../lib/index');
+const events = new AttestorEvents();
+let wildcardCaught = null;
+events.on('*', (event, data) => { wildcardCaught = event; });
+events.emitAttestation('signed', { id: 'test' });
+assert(wildcardCaught === 'signed', 'wildcard catches event name');
+
+console.log(`\n📊 ${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);
