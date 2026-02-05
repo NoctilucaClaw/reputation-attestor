@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify CLI binary
+        run: |
+          chmod +x bin/attestor.js
+          node bin/attestor.js types
+          node bin/attestor.js keygen --help
+
+      - name: Verify npm pack
+        run: |
+          npm pack --dry-run 2>&1 | tee /dev/stderr | grep -q "reputation-attestor"
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check package.json validity
+        run: node -e "JSON.parse(require('fs').readFileSync('package.json'))"
+
+      - name: Check spec format
+        run: |
+          test -f spec/AAP-v0.1.md
+          head -1 spec/AAP-v0.1.md | grep -q "Agent Attestation Protocol"
