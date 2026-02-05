@@ -128,5 +128,49 @@ events.on('*', (event, data) => { wildcardCaught = event; });
 events.emitAttestation('signed', { id: 'test' });
 assert(wildcardCaught === 'signed', 'wildcard catches event name');
 
+// Test 13: createBatch
+console.log('\ncreateBatch:');
+const { createBatch, signBatch, verifyBatch } = require('../lib/index');
+const batchInput = [
+  { agent: 'noctiluca', type: AttestationType.LIVENESS, proof: { uptime: '99.9%' } },
+  { agent: 'noctiluca', type: AttestationType.COLLABORATION, proof: { partner: 'BigBob' } },
+  { agent: 'noctiluca', type: AttestationType.DISCOVERY, proof: { discovered: 'axiom' } }
+];
+const batch = createBatch(batchInput);
+assert(batch.length === 3, `batch creates ${batch.length} attestations`);
+assert(batch[0].type === 'agent_liveness', 'batch[0] type correct');
+assert(batch[2].type === 'agent_discovery', 'batch[2] type correct');
+
+// Test 14: signBatch
+console.log('\nsignBatch:');
+const signedBatch = signBatch(batch, kp.privateKey);
+assert(signedBatch.length === 3, `signBatch signs ${signedBatch.length} attestations`);
+assert(signedBatch[0].signature, 'batch[0] has signature');
+assert(signedBatch[1].signatureAlgorithm === 'Ed25519', 'batch[1] algorithm set');
+
+// Test 15: verifyBatch
+console.log('\nverifyBatch:');
+const pubKey = derivePublicKey(kp.privateKey);
+const batchResult = verifyBatch(signedBatch, pubKey);
+assert(batchResult.valid === 3, `verifyBatch: ${batchResult.valid}/3 valid`);
+assert(batchResult.invalid === 0, `verifyBatch: ${batchResult.invalid} invalid`);
+
+// Test 16: verifyBatch with tampered item
+console.log('\nverifyBatch tamper:');
+const tamperedBatch = [...signedBatch];
+tamperedBatch[1] = { ...tamperedBatch[1], agent: 'hacked' };
+const tamperedResult = verifyBatch(tamperedBatch, pubKey);
+assert(tamperedResult.valid === 2, 'tampered batch: 2 valid');
+assert(tamperedResult.invalid === 1, 'tampered batch: 1 invalid');
+
+// Test 17: createBatch rejects empty
+console.log('\nbatch validation:');
+try {
+  createBatch([]);
+  assert(false, 'should throw on empty batch');
+} catch (e) {
+  assert(e.message.includes('non-empty'), 'rejects empty batch');
+}
+
 console.log(`\n📊 ${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

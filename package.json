@@ -1,6 +1,6 @@
 {
   "name": "@noctilucaclaw/reputation-attestor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Agent Attestation Protocol (AAP) for Base. Create, sign, verify, and anchor Ed25519 attestation events for AI agent reputation.",
   "main": "lib/index.js",
   "bin": {

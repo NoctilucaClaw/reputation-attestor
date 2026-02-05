@@ -18,7 +18,10 @@ const {
   createAttestation,
   signAttestation,
   verifyAttestation,
-  hashAttestation
+  hashAttestation,
+  createBatch,
+  signBatch,
+  verifyBatch
 } = require('../lib/index.js');
 const fs = require('fs');
 const path = require('path');
@@ -147,10 +150,61 @@ async function main() {
       break;
     }
 
+    case 'inspect': {
+      const input = JSON.parse(readInput());
+      const items = Array.isArray(input) ? input : [input];
+      for (const att of items) {
+        console.log('─'.repeat(50));
+        console.log(`  Version:   ${att.version || '?'}`);
+        console.log(`  Agent:     ${att.agent || '?'}`);
+        console.log(`  Subject:   ${att.subject || '(self)'}`);
+        console.log(`  Type:      ${att.type || '?'}`);
+        console.log(`  Timestamp: ${att.timestamp || '?'}`);
+        console.log(`  Nonce:     ${att.nonce || '?'}`);
+        console.log(`  Hash:      ${hashAttestation(att)}`);
+        if (att.signature) {
+          console.log(`  Signed:    ✅ (${att.signatureAlgorithm})`);
+          console.log(`  Sig:       ${att.signature.slice(0, 32)}...`);
+        } else {
+          console.log(`  Signed:    ❌ (unsigned)`);
+        }
+        if (att.proof) {
+          console.log(`  Proof:     ${JSON.stringify(att.proof).slice(0, 80)}`);
+        }
+      }
+      console.log('─'.repeat(50));
+      console.log(`${items.length} attestation(s) inspected`);
+      break;
+    }
+
+    case 'batch': {
+      const keyPath = getArg('key');
+      const input = JSON.parse(readInput());
+      
+      if (!Array.isArray(input)) {
+        console.error('Error: batch input must be a JSON array of attestation specs');
+        console.error('Each item needs: { agent, type, proof }');
+        process.exit(1);
+      }
+
+      const attestations = createBatch(input);
+      
+      if (keyPath) {
+        const key = fs.readFileSync(keyPath);
+        const signed = signBatch(attestations, key);
+        out(signed);
+        console.error(`✅ ${signed.length} attestations created and signed`);
+      } else {
+        out(attestations);
+        console.error(`✅ ${attestations.length} attestations created (unsigned — use --key to sign)`);
+      }
+      break;
+    }
+
     case 'help':
     case '--help':
     case undefined: {
-      console.log(`@noctiluca/reputation-attestor v0.1.0-alpha.2
+      console.log(`@noctilucaclaw/reputation-attestor v0.1.1
 
 Commands:
   keygen [--out <dir>]              Generate Ed25519 keypair
@@ -159,12 +213,16 @@ Commands:
   verify --pubkey <path>            Verify signed attestation
   hash                              SHA-256 content hash
   types                             List attestation types
+  inspect                           Decode and display attestation(s)
+  batch [--key <path>]              Create (+ sign) multiple attestations
 
 Examples:
   attestor keygen --out ~/.attestor
   attestor create --agent noctiluca --type github_pr_merged --proof '{"repo":"soup-kitchen","pr":1}'
   attestor create ... | attestor sign --key ~/.attestor/attestor.key
-  attestor verify --pubkey ~/.attestor/attestor.pub --file signed.json`);
+  attestor verify --pubkey ~/.attestor/attestor.pub --file signed.json
+  attestor inspect --file signed.json
+  echo '[{"agent":"a","type":"agent_liveness","proof":{}}]' | attestor batch --key key`);
       break;
     }
 
