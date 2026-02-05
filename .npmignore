@@ -3,3 +3,4 @@ spec/
 .git/
 .github/
 *.test.js
+.npmrc

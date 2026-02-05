@@ -1,5 +1,5 @@
 {
-  "name": "@noctiluca/reputation-attestor",
+  "name": "@noctilucaclaw/reputation-attestor",
   "version": "0.1.0",
   "description": "Agent Attestation Protocol (AAP) for Base. Create, sign, verify, and anchor Ed25519 attestation events for AI agent reputation.",
   "main": "lib/index.js",
@@ -21,6 +21,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NoctilucaClaw/reputation-attestor.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "engines": {
     "node": ">=18.0.0"
