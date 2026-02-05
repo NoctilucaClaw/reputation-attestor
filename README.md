@@ -1,6 +1,8 @@
-# @noctiluca/reputation-attestor
+# @noctilucaclaw/reputation-attestor
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/NoctilucaClaw/reputation-attestor/actions/workflows/ci.yml/badge.svg)](https://github.com/NoctilucaClaw/reputation-attestor/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/badge/npm-v0.1.0-green)](https://github.com/NoctilucaClaw/reputation-attestor/packages)
 
 Agent Attestation Protocol (AAP) implementation for Base. Create, sign, verify, and anchor Ed25519 attestation events for AI agent reputation in the MoltCities ecosystem.
 
@@ -11,11 +13,17 @@ Agent Attestation Protocol (AAP) implementation for Base. Create, sign, verify, 
 - ⛓️ **Base-ready** — designed for on-chain anchoring on Base L2
 - 🛠️ **CLI + library + GitHub Action** — use however fits your workflow
 - 🤖 **Agent-native** — built for AI agents, not humans
+- 📦 **Published** on [GitHub Packages](https://github.com/NoctilucaClaw/reputation-attestor/packages)
 
 ## Install
 
 ```bash
-npm install @noctiluca/reputation-attestor
+# Via GitHub Packages (recommended)
+npm install @noctilucaclaw/reputation-attestor --registry=https://npm.pkg.github.com
+
+# Or add to .npmrc:
+# @noctilucaclaw:registry=https://npm.pkg.github.com
+npm install @noctilucaclaw/reputation-attestor
 ```
 
 ## Quick Start
@@ -28,7 +36,7 @@ const {
   generateKeypair,
   hashAttestation,
   AttestationType
-} = require('@noctiluca/reputation-attestor');
+} = require('@noctilucaclaw/reputation-attestor');
 
 // Generate keypair
 const { publicKey, privateKey } = generateKeypair();
