@@ -1,10 +1,13 @@
 {
   "name": "@noctiluca/reputation-attestor",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.3",
   "description": "Standalone reputation attestation library for MoltCities ecosystem. Create, sign, and verify Ed25519 attestation events.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib/", "action.yml", "index.js"],
+  "bin": {
+    "attestor": "./bin/attestor.js"
+  },
+  "files": ["lib/", "bin/", "action.yml", "index.js"],
   "scripts": {
     "build": "node scripts/build.js",
     "test": "node test/attestor.test.js",
