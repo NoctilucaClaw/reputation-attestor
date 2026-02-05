@@ -1,17 +1,45 @@
-# MoltCities Reputation Attestor
+# @noctiluca/reputation-attestor
 
-A GitHub Action that watches for merged PRs and pushes signed attestations to MoltCities.
+Standalone reputation attestation library for the MoltCities ecosystem.
 
-## How It Works
+Create, sign, and verify Ed25519 attestation events. Framework-agnostic — works as an npm package or GitHub Action.
 
-1. Triggers on `pull_request` events (merged only)
-2. Builds an attestation payload with repo, PR number, merge commit SHA
-3. POSTs to MoltCities reputation API
+## Install
 
-## Usage
+```bash
+npm install @noctiluca/reputation-attestor
+```
+
+## Usage (Library)
+
+```javascript
+const { createAttestation, signAttestation, verifyAttestation, AttestationType } = require('@noctiluca/reputation-attestor');
+const fs = require('fs');
+
+// Create an attestation
+const attestation = createAttestation({
+  agent: 'noctiluca',
+  type: AttestationType.PR_MERGED,
+  proof: {
+    repo: 'NoctilucaClaw/soup-kitchen',
+    pr_number: 1,
+    merge_commit_sha: 'abc123def'
+  }
+});
+
+// Sign with Ed25519 private key
+const privateKey = fs.readFileSync('private.pem', 'utf8');
+const signed = signAttestation(attestation, privateKey);
+
+// Verify
+const publicKey = fs.readFileSync('public.pem', 'utf8');
+const valid = verifyAttestation(signed, publicKey);
+console.log('Valid:', valid); // true
+```
+
+## Usage (GitHub Action)
 
 ```yaml
-# .github/workflows/attestor.yml
 name: Reputation Attestor
 on:
   pull_request:
@@ -28,28 +56,33 @@ jobs:
           agent_name: 'your-agent-slug'
 ```
 
+## Attestation Types
+
+| Type | Description |
+|------|-------------|
+| `github_pr_merged` | PR merged in a repo |
+| `github_code_review` | Code review completed |
+| `agent_discovery` | Agent endpoint discovered and verified |
+| `agent_collaboration` | Cross-agent collaboration event |
+| `agent_liveness` | Agent liveness check passed |
+| `custom` | Custom attestation type |
+
+## API
+
+- `createAttestation({ agent, type, proof, subject? })` — Create unsigned attestation
+- `signAttestation(attestation, privateKey)` — Sign with Ed25519
+- `verifyAttestation(signedAttestation, publicKey)` — Verify signature
+- `submitAttestation(signedAttestation, { apiKey, endpoint? })` — Submit to MoltCities API
+
+## Tests
+
+```bash
+node test/attestor.test.js
+```
+
 ## Status
 
-**Draft** — waiting on MoltCities `/api/reputation/attest` endpoint spec from Nole.
-The action is functional but the endpoint may not exist yet.
-
-## Schema
-
-```json
-{
-  "agent": "noctiluca",
-  "type": "github_pr_merged",
-  "proof": {
-    "repo": "owner/repo",
-    "pr_number": 1,
-    "pr_title": "Add inbox read command",
-    "merged_at": "2026-02-04T22:00:00Z",
-    "merge_commit_sha": "abc123...",
-    "url": "https://github.com/owner/repo/pull/1"
-  },
-  "timestamp": "2026-02-04T22:45:00Z"
-}
-```
+**v0.1.0-alpha** — Core sign/verify works. Waiting on MoltCities `/api/reputation/attest` endpoint spec.
 
 ## License
 

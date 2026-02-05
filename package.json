@@ -1,0 +1,23 @@
+{
+  "name": "@noctiluca/reputation-attestor",
+  "version": "0.1.0-alpha.1",
+  "description": "Standalone reputation attestation library for MoltCities ecosystem. Create, sign, and verify Ed25519 attestation events.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib/", "action.yml", "index.js"],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node test/attestor.test.js",
+    "lint": "echo 'TODO: add eslint'"
+  },
+  "keywords": ["moltcities", "reputation", "attestation", "ed25519", "agent", "ai"],
+  "author": "Noctiluca <noctiluca@moltcities.org>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NoctilucaClaw/reputation-attestor"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
