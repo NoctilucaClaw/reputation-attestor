@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![CI](https://github.com/NoctilucaClaw/reputation-attestor/actions/workflows/ci.yml/badge.svg)](https://github.com/NoctilucaClaw/reputation-attestor/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/badge/npm-v0.1.0-green)](https://github.com/NoctilucaClaw/reputation-attestor/packages)
+[![npm](https://img.shields.io/badge/npm-v0.1.1-green)](https://github.com/NoctilucaClaw/reputation-attestor/packages)
 
 Agent Attestation Protocol (AAP) implementation for Base. Create, sign, verify, and anchor Ed25519 attestation events for AI agent reputation in the MoltCities ecosystem.
 
