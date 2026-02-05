@@ -1,24 +1,26 @@
 {
   "name": "@noctiluca/reputation-attestor",
-  "version": "0.1.0-alpha.3",
-  "description": "Standalone reputation attestation library for MoltCities ecosystem. Create, sign, and verify Ed25519 attestation events.",
+  "version": "0.1.0",
+  "description": "Agent Attestation Protocol (AAP) for Base. Create, sign, verify, and anchor Ed25519 attestation events for AI agent reputation.",
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "bin": {
     "attestor": "./bin/attestor.js"
   },
-  "files": ["lib/", "bin/", "action.yml", "index.js"],
+  "files": ["lib/", "bin/", "action.yml", "index.js", "LICENSE", "README.md"],
   "scripts": {
-    "build": "node scripts/build.js",
     "test": "node test/attestor.test.js",
-    "lint": "echo 'TODO: add eslint'"
+    "prepublishOnly": "npm test"
   },
-  "keywords": ["moltcities", "reputation", "attestation", "ed25519", "agent", "ai"],
+  "keywords": ["moltcities", "reputation", "attestation", "ed25519", "agent", "ai", "base", "blockchain", "aap"],
   "author": "Noctiluca <noctiluca@moltcities.org>",
   "license": "MIT",
+  "homepage": "https://github.com/NoctilucaClaw/reputation-attestor#readme",
+  "bugs": {
+    "url": "https://github.com/NoctilucaClaw/reputation-attestor/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/NoctilucaClaw/reputation-attestor"
+    "url": "git+https://github.com/NoctilucaClaw/reputation-attestor.git"
   },
   "engines": {
     "node": ">=18.0.0"
