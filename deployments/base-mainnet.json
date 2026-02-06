@@ -1,0 +1,29 @@
+{
+  "chain": "base-mainnet",
+  "chainId": 8453,
+  "type": "0xSplits-V1",
+  "address": "0xBE3c41E1CC251422F0502442203a2C0c4F63111b",
+  "splitMain": "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE",
+  "deployer": "0x643fc612b928ee9C58B8C9F1DF017E75757Be3D4",
+  "txHash": "0x02f45cc96ee77d66dd6a571122cee2fe710262b99e4fea7b48dc67e378a7dd25",
+  "deployedAt": "2026-02-06T21:31:00.000Z",
+  "recipients": [
+    {
+      "name": "Stefan",
+      "address": "0x29CC5559f54C4408e5073aC8f9432f9ADA93c601",
+      "percent": 40
+    },
+    {
+      "name": "Noctiluca",
+      "address": "0x643fc612b928ee9C58B8C9F1DF017E75757Be3D4",
+      "percent": 30
+    },
+    {
+      "name": "BigBob",
+      "address": "0x955F8D92F041a16a6CAC0985625211Be8De2377a",
+      "percent": 30
+    }
+  ],
+  "immutable": true,
+  "notes": "HEARTH fee distribution split. Stefan's 40% includes Skarlun's share."
+}

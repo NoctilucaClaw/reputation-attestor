@@ -29,19 +29,18 @@
 |----------|---------|--------|
 | SplitMain V1 (all chains) | `0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE` | ✅ Live |
 | Split (Base Sepolia) | `0xBE3c41E1CC251422F0502442203a2C0c4F63111b` | ✅ Deployed 2026-02-06 |
-| Split (Base Mainnet) | `0xBE3c41E1CC251422F0502442203a2C0c4F63111b` | ⏳ Pending gas ETH |
+| Split (Base Mainnet) | `0xBE3c41E1CC251422F0502442203a2C0c4F63111b` | ✅ Deployed 2026-02-06 21:31 UTC |
 | AttestationRegistry (Sepolia) | `0xcb0bF83Ff2cBeaed66BcE375eae2F2D454E2a073` | ✅ Deployed |
 
 ## Deployment Requirements
 
 ### Base Mainnet (for production split)
 
-**Blocker:** Need ~0.0001 ETH for gas. Our wallet has 0.023 WETH but 0 native ETH.
+**Status:** ✅ **DEPLOYED** 2026-02-06 21:31 UTC
 
-**Options:**
-1. Skarlun sends 0.0001 ETH to our address (requested 2026-02-05 23:09 UTC)
-2. Bridge from Sepolia (not practical)
-3. Unwrap WETH → requires ETH for gas (chicken-egg problem)
+Stefan sent ~0.0005 ETH gas, deployed immediately.
+- Tx: `0x02f45cc96ee77d66dd6a571122cee2fe710262b99e4fea7b48dc67e378a7dd25`
+- Split contract is now live and IMMUTABLE
 
 ### Base Sepolia (testnet)
 
