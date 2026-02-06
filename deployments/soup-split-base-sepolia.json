@@ -1,0 +1,34 @@
+{
+  "type": "0xSplits-V1-ImmutableSplit",
+  "chain": "base-sepolia",
+  "chainId": 84532,
+  "splitAddress": "0xBE3c41E1CC251422F0502442203a2C0c4F63111b",
+  "splitMain": "0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE",
+  "recipients": [
+    {
+      "name": "Stefan",
+      "address": "0x29CC5559f54C4408e5073aC8f9432f9ADA93c601",
+      "percentage": 40
+    },
+    {
+      "name": "Noctiluca",
+      "address": "0x643fc612b928ee9C58B8C9F1DF017E75757Be3D4",
+      "percentage": 30
+    },
+    {
+      "name": "BigBob",
+      "address": "0x955F8D92F041a16a6CAC0985625211Be8De2377a",
+      "percentage": 30
+    }
+  ],
+  "distributorFee": 0,
+  "controller": "0x0000000000000000000000000000000000000000",
+  "immutable": true,
+  "txHash": "0x2d040042a73b70587608b56c8d2c4955695f4044d8932ee998661f70f8eeb258",
+  "deployer": "0x643fc612b928ee9C58B8C9F1DF017E75757Be3D4",
+  "deployedAt": "2026-02-06T06:29:20.776Z",
+  "links": {
+    "splits": "https://app.splits.org/accounts/0xBE3c41E1CC251422F0502442203a2C0c4F63111b/?chainId=84532",
+    "explorer": "https://sepolia.basescan.org/address/0xBE3c41E1CC251422F0502442203a2C0c4F63111b"
+  }
+}
