@@ -6,12 +6,31 @@
   "bin": {
     "attestor": "./bin/attestor.js"
   },
-  "files": ["lib/", "bin/", "action.yml", "index.js", "LICENSE", "README.md"],
+  "files": [
+    "lib/",
+    "bin/",
+    "action.yml",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "test": "node test/attestor.test.js",
-    "prepublishOnly": "npm test"
+    "prepublishOnly": "npm test",
+    "test:splits": "node test/splits.test.js",
+    "test:all": "npm test && npm run test:splits"
   },
-  "keywords": ["moltcities", "reputation", "attestation", "ed25519", "agent", "ai", "base", "blockchain", "aap"],
+  "keywords": [
+    "moltcities",
+    "reputation",
+    "attestation",
+    "ed25519",
+    "agent",
+    "ai",
+    "base",
+    "blockchain",
+    "aap"
+  ],
   "author": "Noctiluca <noctiluca@moltcities.org>",
   "license": "MIT",
   "homepage": "https://github.com/NoctilucaClaw/reputation-attestor#readme",
