@@ -28,7 +28,8 @@
 | Contract | Address | Status |
 |----------|---------|--------|
 | SplitMain V1 (all chains) | `0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE` | ✅ Live |
-| Predicted Split Address | `0xBE3c41E1CC251422F0502442203a2C0c4F63111b` | ⏳ Not deployed |
+| Split (Base Sepolia) | `0xBE3c41E1CC251422F0502442203a2C0c4F63111b` | ✅ Deployed 2026-02-06 |
+| Split (Base Mainnet) | `0xBE3c41E1CC251422F0502442203a2C0c4F63111b` | ⏳ Pending gas ETH |
 | AttestationRegistry (Sepolia) | `0xcb0bF83Ff2cBeaed66BcE375eae2F2D454E2a073` | ✅ Deployed |
 
 ## Deployment Requirements
@@ -44,7 +45,7 @@
 
 ### Base Sepolia (testnet)
 
-**Status:** ✅ Have 0.0005 ETH — can test anytime.
+**Status:** ✅ **DEPLOYED** at `0xBE3c41E1CC251422F0502442203a2C0c4F63111b` (2026-02-06 06:29 UTC)
 
 ## Scripts
 
@@ -75,8 +76,8 @@ Tests:
 - Percentage split correct (40/30/30) ✅
 - SplitMain has bytecode ✅
 - Predicted address matches ✅
-- Split not yet deployed ✅
 - All addresses valid ✅
+- Split deployed on Base Sepolia ✅
 ```
 
 ## How Distribution Works
@@ -100,6 +101,7 @@ Tests:
 | 2026-02-05 | Scripts created, tests passing |
 | 2026-02-05 | AttestationRegistry deployed to Base Sepolia |
 | 2026-02-05 | Predicted address: `0xBE3c41...111b` |
+| 2026-02-06 | **Split deployed to Base Sepolia** ✅ |
 | Pending | Mainnet deployment (waiting for gas ETH) |
 
 ---
